@@ -5,9 +5,6 @@ local each = framework.functional.each
 local pack = framework.util.pack
 
 local params = framework.params
-params.name = 'Boundary CPU Core'
-params.version = '2.1'
-params.tags = 'cpu,core'
 
 local data_source = MeterDataSource:new()
 function data_source:onFetch(socket)
