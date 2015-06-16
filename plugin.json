@@ -4,9 +4,7 @@
   "tags" : "cpu,core",
   "description" : "Provides per core CPU utilization",
   "command" : "node index.js $(pollInterval)",
-  "command_lua" : "boundary-meter init.lua",
   "postExtract" : "npm install",
-  "postExtract_lua" : "",
   "ignore" : "node_modules",
   "metrics" : ["CPU_CORE"],
   "paramSchema": [
