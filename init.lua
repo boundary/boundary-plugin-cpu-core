@@ -18,13 +18,13 @@ end
 
 -- Allocate a meter plugin instance that handles polling
 -- for measurements
-local meterPlugin = Plugin:new(params, data_source)
+local plugin = Plugin:new(params, data_source)
 
 -- Called once each time the framework requests 
 -- measurements be collected. This callback is required to return
 -- a table of measurement strings which consist of the following:
 -- CPU_CORE <cpu usage in percent> <measurement timestamp> <cpu name>
-function meterPlugin:onParseValues(data)
+function plugin:onParseValues(data)
   local result = {}
  
   -- Iterate over CPU usage data returned from the meter and
@@ -32,11 +32,11 @@ function meterPlugin:onParseValues(data)
   each(function (v, i) 
     local metric, cpu_id = v.metric:match('^(system%.cpu%.usage)|cpu=(%d+)$')
     if metric then
-      table.insert(result, pack('CPU_CORE', v.value, v.timestamp, meterPlugin.source .. '_C' .. cpu_id))
+      table.insert(result, pack('CPU_CORE', v.value, v.timestamp, plugin.source .. '_C' .. cpu_id))
     end
   end, data)
 
   return result
 end
 
-meterPlugin:run()
+plugin:run()
