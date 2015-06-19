@@ -1,7 +1,6 @@
-# Boundary Ping Check Plugin
+# Boundary CPU Core Plugin
 
-Pings a set of hosts and reports on the response time. The plugin allows multiple hosts to be ping'd and each of those hosts to set their own Poll interval. See video [walkthrough](https://help.boundary.com/hc/articles/201383932).
-Note: Currently does not support SmartOS.
+The Boundary CPU Core Plugin reports the CPU utilization of each CPU core individually. Each core is separate source so when graphed, in the legend will be the hostname followed by "-CX" where X is the core index.
 
 ### Prerequisites
 
@@ -11,12 +10,12 @@ Note: Currently does not support SmartOS.
 |:----------|:-----:|:-------:|:-------:|:----:|
 | Supported |   v   |    v    |    -    |  v   |
 
-#### Boundary Meter versions v4.2 or greater
+#### Boundary Meter versions v4.2 or later
 
 - To install new meter go to Settings->Installation or [see instructons](https://help.boundary.com/hc/en-us/sections/200634331-Installation).
 - To upgrade the meter to the latest version - [see instructons](https://help.boundary.com/hc/en-us/articles/201573102-Upgrading-the-Boundary-Meter).
 
-#### Boundary Meter versions less than v4.2
+#### Boundary Meter versions earlier than v4.2
 
 |  Runtime | node.js | Python | Java |
 |:---------|:-------:|:------:|:----:|
@@ -30,17 +29,13 @@ None
 
 ### Plugin Configuration Fields
 
-|Field Name     |Description                                                                       |
-|:--------------|:---------------------------------------------------------------------------------|
-|Source         |The source to display in the legend for the host. Ex. google                      |
-|Host           |The Hostname or IP Address to ping.  For example, www.google.com or 173.194.33.112|
-|Poll Time (sec)|The Poll Interval to send a ping to the host in seconds. Ex. 5                    |
+None
 
 ### Metrics Collected
 
-|Metric Name       |Description                            |
-|:-----------------|:--------------------------------------|
-|Ping Response Time|The response time from the ping command|
+|Metric Name             |Description                                                   |
+|:-----------------------|:-------------------------------------------------------------|
+|Per core CPU utilization|Per core CPU utilization                                      |
 
 ### Dashboards
 
@@ -49,4 +44,3 @@ None
 ### References
 
 None
-
