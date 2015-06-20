@@ -990,8 +990,7 @@ local DataSourcePoller = Emitter:extend()
 -- @param dataSource A DataSource to be polled
 -- @name DataSourcePoller:new
 function DataSourcePoller:initialize(pollInterval, dataSource)
-  self.pollInterval = pollInterval
-  if self.pollInterval < 500 then self.pollInterval = self.pollInterval * 1000 end
+  self.pollInterval = (pollInterval < 1000 and 1000) or pollInterval
   self.dataSource = dataSource
   dataSource:propagate('error', self)
 end
@@ -1031,8 +1030,7 @@ function Plugin:initialize(params, dataSource)
 
   assert(dataSource, 'Plugin:new dataSource is required.')
 
-  local pollInterval = params.pollInterval or 1000
-  if pollInterval < 500 then pollInterval = pollInterval * 1000 end
+  local pollInterval = (params.pollInterval < 1000 and 1000) or params.pollInterval
 
   if not Plugin:_isPoller(dataSource) then
     self.dataSource = DataSourcePoller:new(pollInterval, dataSource)
@@ -1184,6 +1182,7 @@ end
 -- @param timestamp the time the metric was retrieved
 -- You can override this on your plugin instance.
 function Plugin:onFormat(metric, value, source, timestamp)
+  source = string.gsub(source, '%s', '_')
   if timestamp then
     return string.format('%s %f %s %s', metric, value, source, timestamp)
   else
@@ -1467,6 +1466,25 @@ function MeterDataSource:queryMetricCommand(params)
   return '{"jsonrpc":"2.0","method":"query_metric","id":1,"params":' .. json.stringify(params) .. '}\n'
 end
 
+local FileReaderDataSource = DataSource:extend()
+function FileReaderDataSource:initialize(path)
+  self.path = path 
+end
+
+function FileReaderDataSource:fetch(context, func, params)
+  if not fs.existsSync(self.path) then
+    self:emit('error', 'The "' .. self.path .. '" was not found.')
+  else 
+    local success, result = pcall(fs.readFileSync, self.path)
+	  if not success then
+      self:emit('error', failure)
+    else
+      func(result)
+    end
+  end
+end
+
+framework.FileReaderDataSource = FileReaderDataSource
 framework.CommandOutputDataSource = CommandOutputDataSource
 framework.RandomDataSource = RandomDataSource
 framework.DataSourcePoller = DataSourcePoller
