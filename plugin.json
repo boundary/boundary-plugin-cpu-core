@@ -1,6 +1,6 @@
 {
-  "name" : "Boundary CPU Core",
-  "version" : "0.9.0",
+  "name" : "Boundary CPU Core Plugin",
+  "version" : "0.9.1",
   "meterVersionRequired" : "4.2.0-611",
   "os" : [ "Linux", "Windows", "SmartOS", "OS X" ],
   "tags" : "cpu,core",
@@ -13,9 +13,9 @@
   "metrics" : ["CPU_CORE"],
   "paramSchema": [
     {
-      "title": "Poll Interval",
+      "title": "Poll Interval (ms)",
       "name": "pollInterval",
-      "description": "How often (in milliseconds) to poll the system for metrics (default: 1000).",
+      "description": "How often (in milliseconds) to poll the system for metrics.",
       "type" : "integer",
       "default" : 1000,
       "required" : false
@@ -23,8 +23,9 @@
     {
       "title": "Source",
       "name": "source",
-      "description": "The Source to display in the legend for the CPU Core data.  It will default to the hostname of the server",
-      "type": "string"
+      "description": "The Source to display in the legend for the CPU Core data.  It will default to the hostname of the server.",
+      "type": "string",
+      "required" : false
     }
   ]
 }

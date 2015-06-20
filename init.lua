@@ -7,7 +7,7 @@ local pack = framework.util.pack
 local params = framework.params
 
 -- Create a new MeterDataSource which communicates
--- to the meter via its RPC channel
+-- to the meter via its RPC channel using a non-closing connection.
 local data_source = MeterDataSource:new()
 
 -- Callback to fetch the CPU percent usage for each
