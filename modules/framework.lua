@@ -40,7 +40,7 @@ local framework = {}
 local querystring = require('querystring')
 local boundary = require('boundary')
 
-framework.version = '0.9.2'
+framework.version = '0.9.3'
 framework.boundary = boundary
 framework.params = boundary.param or json.parse(fs.readFileSync('param.json')) or {}
 framework.plugin_params = boundary.plugin or json.parse(fs.readFileSync('plugin.json')) or {}
@@ -491,7 +491,6 @@ function framework.string.concat(s1, s2, char)
   end
   return s1 .. char .. s2
 end
-
 
 --- Utility functions.
 -- Various functions that helps with common tasks.
@@ -1182,7 +1181,7 @@ end
 -- @param timestamp the time the metric was retrieved
 -- You can override this on your plugin instance.
 function Plugin:onFormat(metric, value, source, timestamp)
-  source = string.gsub(source, '%s', '_')
+  source = string.gsub(source, '[!@#$%%^&*() {}<>/\\|]', '_')
   if timestamp then
     return string.format('%s %f %s %s', metric, value, source, timestamp)
   else
@@ -1413,7 +1412,7 @@ function CommandOutputDataSource:fetch(context, callback, parser, params)
   proc.stderr:on('data', function (data) output = output .. data end)
   proc:on('exit', function (exitcode)
     if not self:isSuccess(exitcode) then
-      self:emit('error', {message = 'Command terminated with exitcode \'' .. exitcode .. '\' and message \'' .. output .. '\''})
+      self:emit('error', {message = 'Command terminated with exitcode \'' .. exitcode .. '\' and message \'' .. string.gsub(output, '\n', ' ') .. '\''})
       if not self.callback_on_errors then
         return
       end
@@ -1440,7 +1439,11 @@ end
 
 function MeterDataSource:fetch(context, callback)
   local parse = function (value)
-    local parsed = json.parse(value)
+    local success, parsed = pcall(json.parse, value)
+    if not success then
+      context:emitEvent('critical', string.gsub(parsed, '\n', ' ')) 
+      return
+    end
     local result = {}
     if parsed.result.status ~= 'Ok' then
       self:error('Error with status: ' .. parsed.result.status)
