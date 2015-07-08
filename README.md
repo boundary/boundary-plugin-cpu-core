@@ -39,7 +39,9 @@ None
 
 ### Dashboards
 
-None
+|Dashboard Name|Metrics Displayed       |
+|:-------------|:-----------------------|
+|CPU Core      |Per core CPU utilization|
 
 ### References
 
