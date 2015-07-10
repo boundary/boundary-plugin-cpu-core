@@ -1,6 +1,8 @@
 # Boundary CPU Core Plugin
 
-The Boundary CPU Core Plugin reports the CPU utilization of each CPU core individually. Each core is separate source so when graphed, in the legend will be the hostname followed by "-CX" where X is the core index.
+The Boundary CPU Core Plugin reports the CPU utilization of each CPU core individually. Each core is a separate source so when graphed, the legend will display the hostname, or the source provided in the plugin configuration, followed by "-CN" where N is the core number.
+
+**NOTE:** Starting with release 0.9.2 the CPU Core plugin generates sources with core numbers from 0 to N-1, releases previous to 0.9.2 use a 1 to N numbering scheme.
 
 ### Prerequisites
 
