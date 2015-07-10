@@ -32,7 +32,7 @@ function plugin:onParseValues(data)
   each(function (v, i) 
     local metric, cpu_id = v.metric:match('^(system%.cpu%.usage)|cpu=(%d+)$')
     if metric then
-      table.insert(result, pack('CPU_CORE', v.value, v.timestamp, plugin.source .. '_C' .. cpu_id))
+      table.insert(result, pack('CPU_CORE', v.value, v.timestamp, plugin.source .. '-C' .. cpu_id))
     end
   end, data)
 
