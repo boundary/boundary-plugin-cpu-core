@@ -1,6 +1,6 @@
 {
-  "name" : "Boundary CPU Core Plugin",
-  "version" : "0.9.3",
+  "name" : "TrueSight Pulse CPU Core Plugin",
+  "version" : "0.9.4",
   "meterVersionRequired" : "4.2.0-611",
   "unsupportedPlatforms" : [ ],
   "tags" : "cpu,core",
