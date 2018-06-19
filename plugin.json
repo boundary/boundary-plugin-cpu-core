@@ -1,6 +1,6 @@
 {
   "name" : "TrueSight Pulse CPU Core Plugin",
-  "version" : "0.9.4",
+  "version" : "0.9.5",
   "meterVersionRequired" : "4.2.0-611",
   "unsupportedPlatforms" : [ ],
   "tags" : "cpu,core",
@@ -12,7 +12,7 @@
                  }
   ],
   "command" : "node index.js $(pollInterval)",
-  "command_lua" : "boundary-meter init.lua",
+  "command_lua" : "truesight-meter init.lua",
   "postExtract" : "npm install",
   "postExtract_lua" : "",
   "ignore" : "node_modules",
